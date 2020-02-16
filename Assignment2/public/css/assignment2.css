@@ -29,3 +29,11 @@ body
 {
 	background-color: #FFE4C4;
 }
+
+.currencyinput {
+    border: 1px;
+    background-color: #FFFFFF;
+}
+.currencyinput input {
+    border: 0;
+}

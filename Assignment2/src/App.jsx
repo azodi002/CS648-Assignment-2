@@ -1,15 +1,16 @@
-class IssueList extends React.Component{
+class ProductList extends React.Component{
 	
 	constructor(){
 		super();
-		this.state = {issues: []};
-		this.createIssue = this.createIssue.bind(this);
+		this.state = {products: []};
+		this.createProduct = this.createProduct.bind(this);
 	}
  
-	createIssue(issue) {
-		const newIssueList = this.state.issues.slice();
-		newIssueList.push(issue);
-		this.setState({issues:newIssueList});
+	createProduct(product) {
+		const newProductList = this.state.products.slice();
+		newProductList.push(product);
+		product.id = this.state.products.length + 1;
+		this.setState({products:newProductList});
 	}
 
 
@@ -17,20 +18,20 @@ class IssueList extends React.Component{
 		return(
 			<React.Fragment>
 				<h1>My Company Inventory</h1>
-				<IssueFilter />
+				<ProductFilter />
 				<hr />
-				<IssueTable issues = {this.state.issues} />
+				<ProductTable products = {this.state.products} />
 				<hr />
 				<NewProductFilter />
 				<hr />
-				<IssueAdd createIssue={this.createIssue}/>
+				<ProductAdd createProduct={this.createProduct}/>
 			</React.Fragment>
 
 		);
 	}
 }
 
-class IssueFilter extends React.Component {
+class ProductFilter extends React.Component {
 	render() {
 		return (
 			<div> Showing all available products </div>
@@ -46,9 +47,9 @@ class NewProductFilter extends React.Component {
 	}
 }
 
-function IssueTable(props) {
-  const issueRows = props.issues.map(issue =>
-    <IssueRow key={issue.id} issue={issue} />
+function ProductTable(props) {
+  const ProductRows = props.products.map(product =>
+    <ProductRow key={product.id} product={product} />
   );
 
   return (
@@ -62,13 +63,13 @@ function IssueTable(props) {
         </tr>
       </thead>
       <tbody>
-        {issueRows}
+        {ProductRows}
       </tbody>
     </table>
   );
 }
 
-class IssueAdd extends React.Component {
+class ProductAdd extends React.Component {
 
 	constructor(){
 		super();
@@ -77,14 +78,14 @@ class IssueAdd extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const form = document.forms.issueAdd;
-		const issue = {
+		const form = document.forms.ProductAdd;
+		const product = {
 			price: form.price.value, product_name : form.product_name.value, image_path:form.image_path.value,
 			category: form.category.value,
 		}
 		
 
-		this.props.createIssue(issue);
+		this.props.createProduct(product);
 		form.price.value = "";
 		form.product_name.value = "";
 		form.image_path.value = "";
@@ -93,7 +94,7 @@ class IssueAdd extends React.Component {
 
 	render() {
 		return (
-			<form name = "issueAdd" onSubmit={this.handleSubmit}>
+			<form name = "ProductAdd" onSubmit={this.handleSubmit}>
 				<div>
 					<span class="category_label">Category </span>
 					<span class="price_label">Price Per Unit</span>
@@ -107,7 +108,7 @@ class IssueAdd extends React.Component {
 				</select>
 
 
-				<input type = "text" name = "price" placeholder = "$" />
+				<span class="currencyinput">$<input type="text" name="price"/></span>
 				<br />
 				<br />
 
@@ -126,15 +127,15 @@ class IssueAdd extends React.Component {
 	}
 }
 
-function IssueRow(props) {
-  const issue = props.issue;
+function ProductRow(props) {
+  const products = props.product;
   return (
     <tr>
-      <td>{issue.product_name}</td>
-      <td>${issue.price}</td>
-      <td>{issue.category}</td>
+      <td>{products.product_name}</td>
+      <td>${products.price}</td>
+      <td>{products.category}</td>
       <td>
-      	<a target="_blank" href={issue.image_path}>View </a>
+      	<a target="_blank" href={products.image_path}>View </a>
       </td>
     </tr>
   );
@@ -153,5 +154,5 @@ class BorderWrap extends React.Component {
 }
 
 
-const element = <IssueList />;
+const element = <ProductList />;
 ReactDOM.render(element, document.getElementById('content'));

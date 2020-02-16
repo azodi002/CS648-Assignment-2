@@ -18,66 +18,67 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var IssueList =
+var ProductList =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(IssueList, _React$Component);
+  _inherits(ProductList, _React$Component);
 
-  function IssueList() {
+  function ProductList() {
     var _this;
 
-    _classCallCheck(this, IssueList);
+    _classCallCheck(this, ProductList);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(IssueList).call(this));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ProductList).call(this));
     _this.state = {
-      issues: []
+      products: []
     };
-    _this.createIssue = _this.createIssue.bind(_assertThisInitialized(_this));
+    _this.createProduct = _this.createProduct.bind(_assertThisInitialized(_this));
     return _this;
   }
 
-  _createClass(IssueList, [{
-    key: "createIssue",
-    value: function createIssue(issue) {
-      var newIssueList = this.state.issues.slice();
-      newIssueList.push(issue);
+  _createClass(ProductList, [{
+    key: "createProduct",
+    value: function createProduct(product) {
+      var newProductList = this.state.products.slice();
+      newProductList.push(product);
+      product.id = this.state.products.length + 1;
       this.setState({
-        issues: newIssueList
+        products: newProductList
       });
     }
   }, {
     key: "render",
     value: function render() {
-      return React.createElement(React.Fragment, null, React.createElement("h1", null, "My Company Inventory"), React.createElement(IssueFilter, null), React.createElement("hr", null), React.createElement(IssueTable, {
-        issues: this.state.issues
-      }), React.createElement("hr", null), React.createElement(NewProductFilter, null), React.createElement("hr", null), React.createElement(IssueAdd, {
-        createIssue: this.createIssue
+      return React.createElement(React.Fragment, null, React.createElement("h1", null, "My Company Inventory"), React.createElement(ProductFilter, null), React.createElement("hr", null), React.createElement(ProductTable, {
+        products: this.state.products
+      }), React.createElement("hr", null), React.createElement(NewProductFilter, null), React.createElement("hr", null), React.createElement(ProductAdd, {
+        createProduct: this.createProduct
       }));
     }
   }]);
 
-  return IssueList;
+  return ProductList;
 }(React.Component);
 
-var IssueFilter =
+var ProductFilter =
 /*#__PURE__*/
 function (_React$Component2) {
-  _inherits(IssueFilter, _React$Component2);
+  _inherits(ProductFilter, _React$Component2);
 
-  function IssueFilter() {
-    _classCallCheck(this, IssueFilter);
+  function ProductFilter() {
+    _classCallCheck(this, ProductFilter);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(IssueFilter).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(ProductFilter).apply(this, arguments));
   }
 
-  _createClass(IssueFilter, [{
+  _createClass(ProductFilter, [{
     key: "render",
     value: function render() {
       return React.createElement("div", null, " Showing all available products ");
     }
   }]);
 
-  return IssueFilter;
+  return ProductFilter;
 }(React.Component);
 
 var NewProductFilter =
@@ -101,45 +102,45 @@ function (_React$Component3) {
   return NewProductFilter;
 }(React.Component);
 
-function IssueTable(props) {
-  var issueRows = props.issues.map(function (issue) {
-    return React.createElement(IssueRow, {
-      key: issue.id,
-      issue: issue
+function ProductTable(props) {
+  var ProductRows = props.products.map(function (product) {
+    return React.createElement(ProductRow, {
+      key: product.id,
+      product: product
     });
   });
   return React.createElement("table", {
     className: "bordered-table"
-  }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", null, "Product Name"), React.createElement("th", null, "Price"), React.createElement("th", null, "Category"), React.createElement("th", null, "Image"))), React.createElement("tbody", null, issueRows));
+  }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", null, "Product Name"), React.createElement("th", null, "Price"), React.createElement("th", null, "Category"), React.createElement("th", null, "Image"))), React.createElement("tbody", null, ProductRows));
 }
 
-var IssueAdd =
+var ProductAdd =
 /*#__PURE__*/
 function (_React$Component4) {
-  _inherits(IssueAdd, _React$Component4);
+  _inherits(ProductAdd, _React$Component4);
 
-  function IssueAdd() {
+  function ProductAdd() {
     var _this2;
 
-    _classCallCheck(this, IssueAdd);
+    _classCallCheck(this, ProductAdd);
 
-    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(IssueAdd).call(this));
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(ProductAdd).call(this));
     _this2.handleSubmit = _this2.handleSubmit.bind(_assertThisInitialized(_this2));
     return _this2;
   }
 
-  _createClass(IssueAdd, [{
+  _createClass(ProductAdd, [{
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      var form = document.forms.issueAdd;
-      var issue = {
+      var form = document.forms.ProductAdd;
+      var product = {
         price: form.price.value,
         product_name: form.product_name.value,
         image_path: form.image_path.value,
         category: form.category.value
       };
-      this.props.createIssue(issue);
+      this.props.createProduct(product);
       form.price.value = "";
       form.product_name.value = "";
       form.image_path.value = "";
@@ -149,7 +150,7 @@ function (_React$Component4) {
     key: "render",
     value: function render() {
       return React.createElement("form", {
-        name: "issueAdd",
+        name: "ProductAdd",
         onSubmit: this.handleSubmit
       }, React.createElement("div", null, React.createElement("span", {
         class: "category_label"
@@ -167,11 +168,12 @@ function (_React$Component4) {
         value: "sweaters"
       }, "Sweaters"), React.createElement("option", {
         value: "accessories"
-      }, "Accessories")), React.createElement("input", {
+      }, "Accessories")), React.createElement("span", {
+        class: "currencyinput"
+      }, "$", React.createElement("input", {
         type: "text",
-        name: "price",
-        placeholder: "$"
-      }), React.createElement("br", null), React.createElement("br", null), React.createElement("div", null, React.createElement("span", {
+        name: "price"
+      })), React.createElement("br", null), React.createElement("br", null), React.createElement("div", null, React.createElement("span", {
         class: "product_label"
       }, "Product Name "), React.createElement("span", {
         class: "image_label"
@@ -190,14 +192,14 @@ function (_React$Component4) {
     }
   }]);
 
-  return IssueAdd;
+  return ProductAdd;
 }(React.Component);
 
-function IssueRow(props) {
-  var issue = props.issue;
-  return React.createElement("tr", null, React.createElement("td", null, issue.product_name), React.createElement("td", null, "$", issue.price), React.createElement("td", null, issue.category), React.createElement("td", null, React.createElement("a", {
+function ProductRow(props) {
+  var products = props.product;
+  return React.createElement("tr", null, React.createElement("td", null, products.product_name), React.createElement("td", null, "$", products.price), React.createElement("td", null, products.category), React.createElement("td", null, React.createElement("a", {
     target: "_blank",
-    href: issue.image_path
+    href: products.image_path
   }, "View ")));
 }
 
@@ -228,5 +230,5 @@ function (_React$Component5) {
   return BorderWrap;
 }(React.Component);
 
-var element = React.createElement(IssueList, null);
+var element = React.createElement(ProductList, null);
 ReactDOM.render(element, document.getElementById('content'));
